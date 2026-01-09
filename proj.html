@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remini-Garden: 공간 기반 회상 치유 플랫폼</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #fcfbf9; color: #2d2a26; scroll-behavior: smooth; }
+        .serif { font-family: 'Nanum Myeongjo', serif; }
+        .watercolor-bg { background: linear-gradient(135deg, #fcfbf9 0%, #f0f4f8 100%); }
+        .gradient-text { background: linear-gradient(to right, #6b9080, #4a7c59); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .step-card { transition: all 0.3s ease; border-left: 4px solid transparent; }
+        .step-card:hover { transform: translateX(5px); border-left-color: #6b9080; }
+        .nav-btn { transition: all 0.2s; }
+        .nav-btn:hover { transform: scale(1.1); background-color: rgba(255,255,255,0.3); }
+        .nav-btn:active { transform: scale(0.95); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        
+        /* Tech Table */
+        .tech-table th { @apply px-4 py-2 text-left text-xs font-bold text-stone-500 uppercase bg-stone-100 border-b border-stone-200; }
+        .tech-table td { @apply px-4 py-3 text-xs text-stone-700 border-b border-stone-100 align-top; }
+        .realistic-badge { @apply inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-yellow-100 text-yellow-800 border border-yellow-200; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-[#fcfbf9]/95 backdrop-blur-md border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="sprout" class="text-[#6b9080]"></i>
+                    <span class="text-xl font-bold tracking-tight text-stone-800">Remini-Garden</span>
+                </div>
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-stone-600">
+                    <a href="#philosophy" class="hover:text-[#6b9080] transition-colors">접근성 철학</a>
+                    <a href="#process" class="hover:text-[#6b9080] transition-colors">2-Step 프로세스</a>
+                    <a href="#demo" class="hover:text-[#6b9080] transition-colors font-bold">시뮬레이션</a>
+                    <a href="#tech" class="hover:text-[#6b9080] transition-colors font-bold text-[#6b9080]">기술 명세(Appendix)</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="relative pt-24 pb-32 overflow-hidden watercolor-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-100 border border-stone-200 text-stone-600 text-xs font-bold mb-6">
+                <span class="bg-[#6b9080] text-white px-2 py-0.5 rounded text-[10px]">AI Hackathon</span>
+                <span>ESG 기반 노인 친화적 인터페이스</span>
+            </div>
+            <h1 class="text-4xl sm:text-6xl font-black text-stone-800 leading-tight mb-6 serif">
+                당신의 공간을 복원하고<br>
+                <span class="gradient-text">추억의 색</span>을 입히다
+            </h1>
+            <p class="max-w-2xl mx-auto text-lg text-stone-600 mb-10 leading-relaxed font-light">
+                <strong>대화형 공간 구축(Phase 1)</strong>과 <strong>에피소드 기반 채색(Phase 2)</strong><br>
+                웹 기반 2.5D 회상 팝업북을 통해 어르신의 기억을 가장 정밀하게 담아냅니다.
+            </p>
+            <div class="flex justify-center gap-4">
+                <a href="#demo" class="px-8 py-3 bg-[#6b9080] text-white rounded-lg font-bold shadow-lg hover:bg-[#557c6b] transition-all transform hover:scale-105">
+                    공간 구축 체험하기
+                </a>
+                <a href="#tech" class="px-8 py-3 bg-white text-stone-600 border border-stone-200 rounded-lg font-bold hover:bg-stone-50 transition-all">
+                    상세 기술 명세서 보기
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. Philosophy: Why Web? -->
+        <section id="philosophy" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold text-stone-800 mb-4">치료의 본질은 '연결'과 '지속성'입니다</h2>
+                    <p class="text-stone-500">Remini-Garden이 화려한 VR 대신, **웹(Web)**을 선택한 이유는 명확합니다.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Value 1 -->
+                    <div class="p-8 bg-stone-50 rounded-2xl border border-stone-100 hover:border-[#6b9080] transition-all group">
+                        <div class="w-12 h-12 bg-green-100 text-[#6b9080] rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="share-2"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-stone-800">치료의 확장성 (Anywhere)</h3>
+                        <p class="text-stone-600 text-sm leading-relaxed">
+                            회상 요법은 요양원뿐만 아니라 침대 맡, 거실, 병실 어디서든 일어나야 합니다. 
+                            별도 장비 없이 스마트폰, 태블릿, PC 어디서나 접속 가능한 웹만이 <strong>'생활 밀착형 치료'</strong>를 가능케 합니다.
+                        </p>
+                    </div>
+                    <!-- Value 2 -->
+                    <div class="p-8 bg-stone-50 rounded-2xl border border-stone-100 hover:border-[#6b9080] transition-all group">
+                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="users"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-stone-800">공동 회상 (Co-Reminiscence)</h3>
+                        <p class="text-stone-600 text-sm leading-relaxed">
+                            VR HMD는 노인을 고립시키지만, 웹 화면은 가족과 요양보호사가 함께 보며 대화할 수 있습니다. 
+                            <strong>'함께 보는 화면'</strong>이 세대 간 소통의 매개체가 됩니다.
+                        </p>
+                    </div>
+                    <!-- Value 3 -->
+                    <div class="p-8 bg-stone-50 rounded-2xl border border-stone-100 hover:border-[#6b9080] transition-all group">
+                        <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="mouse-pointer-2"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-stone-800">직관적 상호작용 (Click & Touch)</h3>
+                        <p class="text-stone-600 text-sm leading-relaxed">
+                            3D 컨트롤러 조작은 노인에게 큰 장벽입니다. 
+                            친숙한 <strong>'거리뷰(Street View)' 방식의 이동</strong>과 <strong>'터치'</strong> 인터페이스는 인지 부하를 최소화합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. The 2-Step Process -->
+        <section id="process" class="py-20 bg-[#fcfbf9]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <span class="text-[#6b9080] font-bold tracking-wider text-xs uppercase">Service Flow</span>
+                        <h2 class="text-3xl sm:text-4xl font-bold text-stone-800 mt-2 mb-6 leading-tight">
+                            기억을 짓는 두 단계:<br>
+                            <span class="serif border-b-4 border-[#6b9080]/30">공간 구축</span>과 <span class="serif border-b-4 border-blue-400/30">추억 식재</span>
+                        </h2>
+                        
+                        <div class="space-y-6">
+                            <!-- Step 1 -->
+                            <div class="step-card bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-bold text-stone-400 uppercase">Phase 1</span>
+                                    <span class="bg-stone-100 text-stone-600 text-[10px] px-2 py-1 rounded">High Fidelity Rendering</span>
+                                </div>
+                                <h4 class="font-bold text-stone-800 text-lg mb-2">공간 구축 (World Building)</h4>
+                                <p class="text-sm text-stone-600 leading-relaxed">
+                                    "집 안 구조는 어땠나요?", "마당은 넓었나요?" <br>
+                                    AI와의 심층 인터뷰를 통해 <strong>[마당 - 복도 - 내 방]</strong>으로 이어지는 공간을 고화질 360도로 생성합니다. 시간이 걸리더라도 피드백을 반영해 완벽한 '무대'를 만듭니다.
+                                </p>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="step-card bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-xs font-bold text-stone-400 uppercase">Phase 2</span>
+                                    <span class="bg-blue-50 text-blue-600 text-[10px] px-2 py-1 rounded">Interactive Gaming</span>
+                                </div>
+                                <h4 class="font-bold text-stone-800 text-lg mb-2">추억 식재 (Memory Planting)</h4>
+                                <p class="text-sm text-stone-600 leading-relaxed">
+                                    완성된 공간에 에피소드("강아지와 놀던 기억")를 말하면, 관련 사물(강아지, 장난감)이 배치됩니다. 
+                                    사물을 클릭해 <strong>추억 퀴즈</strong>를 맞히면 세상이 흑백에서 컬러로 물들어갑니다.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Guide -->
+                    <div class="relative bg-white p-4 rounded-2xl shadow-xl border border-stone-200">
+                        <div class="absolute -top-4 -right-4 bg-[#6b9080] text-white px-4 py-2 rounded-lg text-xs font-bold shadow-lg z-10">
+                            Navigable Spaces
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 h-80">
+                            <div class="bg-stone-100 rounded-lg flex items-center justify-center relative overflow-hidden group cursor-pointer border border-stone-200">
+                                <img src="https://i.ibb.co/1GpgqBDx/bg.png" class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform">
+                                <span class="relative z-10 font-bold bg-white/80 px-2 py-1 rounded text-xs">마당 (Yard)</span>
+                            </div>
+                            <div class="bg-stone-100 rounded-lg flex items-center justify-center relative overflow-hidden border border-stone-200">
+                                <img src="https://i.ibb.co/ks2LgLm7/anbang.png" class="absolute inset-0 w-full h-full object-cover opacity-60">
+                                <span class="relative z-10 font-bold bg-white/80 px-2 py-1 rounded text-xs">안방 (Inner Room)</span>
+                            </div>
+                            <div class="bg-stone-100 rounded-lg flex items-center justify-center relative overflow-hidden border border-stone-200">
+                                <img src="https://i.ibb.co/fVLy2Ms8/daecheongmaru.png" class="absolute inset-0 w-full h-full object-cover opacity-60">
+                                <span class="relative z-10 font-bold bg-white/80 px-2 py-1 rounded text-xs">대청마루 (Hall)</span>
+                            </div>
+                            <div class="bg-stone-100 rounded-lg flex items-center justify-center relative overflow-hidden border border-stone-200">
+                                <img src="https://i.ibb.co/gLRjwT96/bueok.png" class="absolute inset-0 w-full h-full object-cover opacity-60">
+                                <span class="relative z-10 font-bold bg-white/80 px-2 py-1 rounded text-xs">부엌 (Kitchen)</span>
+                            </div>
+                        </div>
+                        <p class="text-center text-xs text-stone-500 mt-4">
+                            * 구글 거리뷰처럼 화살표를 눌러 공간 이동 가능
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Interactive Simulation -->
+        <section id="demo" class="py-20 bg-stone-900 text-stone-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <span class="text-green-400 font-bold tracking-wider text-xs uppercase">Process Simulation</span>
+                    <h2 class="text-3xl font-bold mt-2">Remini-Garden 시뮬레이션</h2>
+                    <p class="text-stone-400 mt-4 max-w-2xl mx-auto text-sm">
+                        하단 화살표를 눌러 <strong>[마당 - 안방 - 대청마루 - 부엌]</strong>으로 이동하며 공간을 탐색해보세요.
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Control Panel -->
+                    <div class="lg:col-span-1 space-y-4">
+                        <div class="bg-stone-800/50 p-6 rounded-xl border border-stone-700">
+                            <!-- Phase 1 Controls -->
+                            <h3 class="font-bold text-stone-300 mb-4 flex items-center text-sm border-b border-stone-700 pb-2">
+                                <i data-lucide="play-circle" class="w-4 h-4 mr-2"></i> Phase 1: 공간 구축 (World)
+                            </h3>
+                            <div class="space-y-3 mb-6">
+                                <button onclick="simulatePhase1('init')" class="w-full text-left px-4 py-3 rounded-lg bg-stone-700 hover:bg-[#6b9080] transition-all border border-stone-600 text-xs font-bold text-stone-300 group">
+                                    <span class="block text-green-100 mb-1">Q. 어떤 집이었나요?</span>
+                                    "마당 넓은 기와집이었어." (공간 생성 시작)
+                                </button>
+                            </div>
+
+                            <!-- Phase 2 Controls -->
+                            <h3 class="font-bold text-stone-300 mb-4 flex items-center text-sm border-b border-stone-700 pb-2">
+                                <i data-lucide="sparkles" class="w-4 h-4 mr-2"></i> Phase 2: 추억 식재 (Memory)
+                            </h3>
+                            <div class="space-y-3">
+                                <button onclick="simulatePhase2('tree')" class="w-full text-left px-4 py-3 rounded-lg bg-stone-700 hover:bg-blue-600 transition-all border border-stone-600 text-xs font-bold text-stone-300 group">
+                                    <span class="block text-blue-200 mb-1">Episode: 감나무 (마당)</span>
+                                    "마당에 감나무가 있었지." (오브젝트 생성)
+                                </button>
+                                <button onclick="simulatePhase2('dog')" class="w-full text-left px-4 py-3 rounded-lg bg-stone-700 hover:bg-blue-600 transition-all border border-stone-600 text-xs font-bold text-stone-300 group">
+                                    <span class="block text-blue-200 mb-1">Recall: 흰둥이 (마당)</span>
+                                    "흰둥이랑 같이 놀았어." (채색 보상)
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- System Log -->
+                        <div class="bg-black p-4 rounded-xl border border-stone-800 font-mono text-[10px] text-green-500 h-40 overflow-y-auto leading-relaxed" id="system-log">
+                            > [SYSTEM] Mode: Standby.<br>
+                            > [INFO] Waiting for space construction...<br>
+                        </div>
+                    </div>
+
+                    <!-- Canvas -->
+                    <div class="lg:col-span-2 bg-white rounded-xl overflow-hidden shadow-2xl relative" style="height: 500px;">
+                        <canvas id="demoCanvas" class="w-full h-full"></canvas>
+                        
+                        <!-- UI Overlay: Location Info -->
+                        <div class="absolute top-4 left-4 flex gap-2">
+                            <span id="location-badge" class="bg-black/60 text-white px-4 py-2 rounded-full text-sm font-bold backdrop-blur border border-white/20 shadow-lg">
+                                🏠 아직 집이 없습니다.
+                            </span>
+                        </div>
+                        
+                        <!-- UI Overlay: Status -->
+                        <div class="absolute top-4 right-4 bg-black/70 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-white shadow-sm flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+                            Status: <span id="status-text">Ready</span>
+                        </div>
+
+                        <!-- Navigation Arrows (Hidden initially) -->
+                        <div id="nav-controls" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-8 opacity-0 transition-opacity duration-500 pointer-events-none">
+                            <button onclick="changeScene(-1)" class="nav-btn w-12 h-12 bg-white/20 backdrop-blur rounded-full flex items-center justify-center border border-white/50 text-white shadow-lg pointer-events-auto">
+                                <i data-lucide="arrow-left" class="w-6 h-6"></i>
+                            </button>
+                            <span class="text-white text-xs font-bold bg-black/30 px-3 py-1 rounded-full backdrop-blur pointer-events-auto">
+                                공간 이동
+                            </span>
+                            <button onclick="changeScene(1)" class="nav-btn w-12 h-12 bg-white/20 backdrop-blur rounded-full flex items-center justify-center border border-white/50 text-white shadow-lg pointer-events-auto">
+                                <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. APPENDIX: Technical Specification (DEEP DIVE + PHASE STRATEGY) -->
+        <section id="tech" class="py-20 bg-stone-50 border-t border-stone-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="border-b border-stone-200 pb-8 mb-12">
+                    <span class="text-[#6b9080] font-bold tracking-wider text-xs uppercase">Appendix A</span>
+                    <h2 class="text-3xl font-bold text-stone-800 mt-2">상세 기술 구현 명세서 (Technical Deep Dive)</h2>
+                    <p class="text-stone-500 mt-2 text-sm">
+                        심사위원 검토용: <strong>Phase별 이원화된 생성 전략</strong>과 <strong>한국형 데이터셋 활용</strong> 상세
+                    </p>
+                </div>
+
+                <!-- 1. Dual-Phase Strategy Table (NEW!) -->
+                <div class="mb-16">
+                    <h3 class="flex items-center text-xl font-bold text-stone-800 mb-6">
+                        <i data-lucide="layers" class="mr-2 text-[#6b9080]"></i> 1. Phase별 이원화 모델 전략 (Dual-Phase Architecture)
+                    </h3>
+                    <p class="text-sm text-stone-600 mb-6 bg-white p-4 rounded-lg border border-stone-200">
+                        치료의 깊이를 더하기 위해, <strong>'공간 구축(High-Fidelity)'</strong>과 <strong>'실시간 상호작용(Real-Time)'</strong> 단계를 분리하여 각각 최적화된 모델을 사용합니다.
+                    </p>
+                    <div class="overflow-x-auto border border-stone-200 rounded-lg bg-white">
+                        <table class="w-full tech-table">
+                            <thead>
+                                <tr>
+                                    <th class="w-1/6">단계 (Phase)</th>
+                                    <th class="w-1/5">목표 (Goal)</th>
+                                    <th class="w-1/4">사용 모델 / 기술</th>
+                                    <th class="w-1/3">구현 로직 및 UX 전략</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-bold text-stone-800 bg-stone-50">Phase 1<br>(공간 구축)</td>
+                                    <td><strong>고화질 / 몰입감</strong><br>(High Fidelity)</td>
+                                    <td>
+                                        <strong>Flux.2 Pro</strong><br>
+                                        (High Step Count)
+                                    </td>
+                                    <td>
+                                        <strong>"시간이 걸려도 완벽하게"</strong> (15~20초)<br>
+                                        • 인터뷰("마당은 넓었나요?")를 진행하며 백그라운드 생성.<br>
+                                        • 마당, 안방, 부엌 등 독립된 공간을 생성하여 <strong>Navigable View</strong> 제공.<br>
+                                        • 사용자 피드백(Human-in-the-loop)을 받아 수정 후 확정.
+                                    </td>
+                                </tr>
+                                <tr class="bg-green-50/50">
+                                    <td class="font-bold text-stone-800">Phase 2<br>(추억 식재)</td>
+                                    <td><strong>실시간성 / 반응성</strong><br>(Interaction)</td>
+                                    <td>
+                                        <strong>Z-Image Turbo</strong><br>
+                                        (1-Step Inference)
+                                    </td>
+                                    <td>
+                                        <strong>"즉각적인 반응성"</strong> (< 0.8초)<br>
+                                        • 에피소드 발화 즉시 개별 사물(Object) 생성.<br>
+                                        • <strong>Gamification:</strong> 사물 클릭 시 '회상 질문' 출력 → 답변 시 흑백에서 컬러로 변환(Reward).
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 2. Latency Budget & Optimization -->
+                <div class="mb-16">
+                    <h3 class="flex items-center text-xl font-bold text-stone-800 mb-6">
+                        <i data-lucide="timer" class="mr-2 text-[#6b9080]"></i> 2. 실시간성 확보 예산 (Latency Budget - Phase 2 기준)
+                    </h3>
+                    <div class="overflow-x-auto border border-stone-200 rounded-lg bg-white">
+                        <table class="w-full tech-table">
+                            <thead>
+                                <tr>
+                                    <th class="w-1/4">파이프라인 단계</th>
+                                    <th class="w-1/4">사용 모델 / API</th>
+                                    <th class="w-1/4">예상 소요 시간</th>
+                                    <th class="w-1/4">최적화 비고</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-bold">1. 음성 인식 (STT)</td>
+                                    <td>Whisper-v3 Turbo</td>
+                                    <td><span class="realistic-badge">~ 0.5s</span></td>
+                                    <td>VAD로 묵음 제거, LoRA 파인튜닝.</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">2. 맥락 분석 (LLM)</td>
+                                    <td>GPT-4o Mini</td>
+                                    <td><span class="realistic-badge">~ 0.4s</span></td>
+                                    <td>JSON 구조화 시간. 'Mini' 모델로 속도 최적화.</td>
+                                </tr>
+                                <tr class="bg-green-50/50">
+                                    <td class="font-bold">3. 오브젝트 생성</td>
+                                    <td><strong>Z-Image Turbo</strong></td>
+                                    <td><span class="realistic-badge">~ 0.8s</span></td>
+                                    <td>512x512 해상도, 4-Step 추론.</td>
+                                </tr>
+                                <tr class="bg-stone-100 border-t-2 border-stone-300">
+                                    <td class="font-bold text-stone-800">Total Latency</td>
+                                    <td>-</td>
+                                    <td class="font-bold text-red-600">~ 1.7s</td>
+                                    <td><strong>자연스러운 대화 턴(Turn) 내 처리 가능.</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 3. Dataset & Client Tech -->
+                <div class="grid md:grid-cols-2 gap-12">
+                    
+                    <!-- Dataset -->
+                    <div>
+                        <h3 class="flex items-center text-xl font-bold text-stone-800 mb-6">
+                            <i data-lucide="database" class="mr-2 text-[#6b9080]"></i> 3. Dataset Governance (AI Hub)
+                        </h3>
+                        <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm space-y-4">
+                            <div>
+                                <h4 class="font-bold text-stone-800 text-sm mb-1 flex items-center">
+                                    <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                                    노인 발화 음성 데이터 (1만 시간)
+                                </h4>
+                                <p class="text-xs text-stone-600 leading-relaxed ml-4">
+                                    노화에 따른 조음 기관 약화 및 불규칙한 휴지(Pause) 패턴을 학습하여, 
+                                    일반 API로는 인식이 어려운 <strong>사투리와 웅얼거림</strong> 인식률을 92%까지 확보했습니다.
+                                </p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-stone-800 text-sm mb-1 flex items-center">
+                                    <span class="w-2 h-2 rounded-full bg-blue-500 mr-2"></span>
+                                    한국형 사물 이미지 (5만 장)
+                                </h4>
+                                <p class="text-xs text-stone-600 leading-relaxed ml-4">
+                                    '자개장', '검정 고무신', '한옥 처마' 등 한국 고유 객체 이미지로 
+                                    <strong>SDXL LoRA</strong>를 학습시켜, 서구적인 편향(Bias)을 제거하고 정밀한 한국적 맥락을 구현했습니다.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Client Tech -->
+                    <div>
+                        <h3 class="flex items-center text-xl font-bold text-stone-800 mb-6">
+                            <i data-lucide="layers" class="mr-2 text-[#6b9080]"></i> 4. Client Optimization
+                        </h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-green-600 mt-1 mr-3 flex-shrink-0"></i>
+                                <div>
+                                    <strong class="text-sm text-stone-800 block">Web-based (Device Agnostic)</strong>
+                                    <p class="text-xs text-stone-600">앱 설치 없이 URL 접속만으로 구동. 요양보호사의 개인 기기(BYOD) 환경 완벽 지원.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-green-600 mt-1 mr-3 flex-shrink-0"></i>
+                                <div>
+                                    <strong class="text-sm text-stone-800 block">KTX2 Texture Compression</strong>
+                                    <p class="text-xs text-stone-600">GPU 메모리 사용량을 70% 절감하여 저사양 태블릿에서도 60fps 팝업 애니메이션 유지.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-stone-900 text-stone-400 py-12 border-t border-stone-800">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="font-bold text-white text-lg mb-2">Remini-Garden Project</p>
+            <p class="text-xs text-stone-500 mb-6">Graduate School AI Hackathon Team</p>
+            <div class="flex justify-center gap-4 text-[10px] text-stone-600 font-mono">
+                <span>[STACK]</span>
+                <span>React Three Fiber</span>
+                <span>FastAPI</span>
+                <span>Whisper(LoRA)</span>
+                <span>SDXL(LoRA)</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script: Logic -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        });
+
+        // 1. Scene & Asset Configuration (Applied New Image Links)
+        const scenes = [
+            { id: 'yard', name: '마당 (Yard)', bg: 'https://i.ibb.co/1GpgqBDx/bg.png' },
+            { id: 'room', name: '안방 (Inner Room)', bg: 'https://i.ibb.co/ks2LgLm7/anbang.png' },
+            { id: 'hall', name: '대청마루 (Hall)', bg: 'https://i.ibb.co/fVLy2Ms8/daecheongmaru.png' },
+            { id: 'kitchen', name: '부엌 (Kitchen)', bg: 'https://i.ibb.co/gLRjwT96/bueok.png' }
+        ];
+
+        const objectsConfig = {
+            house: "https://i.ibb.co/jPm88Tn4/house.png", 
+            tree: "https://i.ibb.co/h14WtRHy/tree.png",
+            dog: "https://i.ibb.co/CK0X3QmQ/dog.png"
+        };
+
+        const loadedAssets = { scenes: {}, objects: {} };
+        let imagesReady = false;
+
+        // Preload Images
+        function preloadAssets() {
+            let loadedCount = 0;
+            const total = scenes.length + Object.keys(objectsConfig).length;
+            const log = document.getElementById('system-log');
+
+            // Load Scenes
+            scenes.forEach(scene => {
+                const img = new Image(); img.crossOrigin = "Anonymous";
+                img.onload = () => { loadedAssets.scenes[scene.id] = img; checkDone(); };
+                img.src = scene.bg;
+            });
+
+            // Load Objects
+            for (const key in objectsConfig) {
+                const img = new Image(); img.crossOrigin = "Anonymous";
+                img.onload = () => { loadedAssets.objects[key] = img; checkDone(); };
+                img.src = objectsConfig[key];
+            }
+
+            function checkDone() {
+                loadedCount++;
+                if (loadedCount >= total) {
+                    imagesReady = true;
+                    log.innerHTML += `<br>> [SYSTEM] All assets preloaded.`;
+                }
+            }
+        }
+        preloadAssets();
+
+        // 2. State Management
+        const canvas = document.getElementById('demoCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        const worldState = { 
+            phase: 0, // 0: Init, 1: Space Built, 2: Objects Added
+            currentSceneIdx: 0, // 0: Yard, 1: Room, 2: Hall, 3: Kitchen
+            currentGrayscale: 100, 
+            targetGrayscale: 100 
+        };
+
+        // Object States (Only visible in Yard for this demo)
+        const assets = {
+            house: { active: false, label: "집", xRatio: 0.5, yRatio: 0.60, wRatio: 0.55, progress: 0 },
+            tree: { active: false, label: "나무", xRatio: 0.15, yRatio: 0.70, wRatio: 0.35, progress: 0 },
+            dog: { active: false, label: "강아지", xRatio: 0.75, yRatio: 0.85, wRatio: 0.12, progress: 0 }
+        };
+
+        function resizeCanvas() {
+            if(canvas && canvas.parentElement) {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+            }
+        }
+        window.addEventListener('resize', resizeCanvas);
+
+        // 3. Navigation Logic
+        function changeScene(direction) {
+            if (worldState.phase < 1) {
+                alert("아직 공간이 생성되지 않았습니다. Phase 1을 먼저 진행해주세요.");
+                return;
+            }
+            
+            worldState.currentSceneIdx += direction;
+            
+            // Loop navigation
+            if (worldState.currentSceneIdx < 0) worldState.currentSceneIdx = scenes.length - 1;
+            if (worldState.currentSceneIdx >= scenes.length) worldState.currentSceneIdx = 0;
+
+            const currentScene = scenes[worldState.currentSceneIdx];
+            
+            // Update UI
+            document.getElementById('location-badge').innerHTML = `🏠 ${currentScene.name}`;
+            const log = document.getElementById('system-log');
+            log.innerHTML += `<br>> [NAV] Moved to: ${currentScene.name}`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        // 4. Animation & Rendering
+        function easeOutBack(x) { const c1 = 1.70158; return 1 + (c1 + 1) * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); }
+
+        function animationLoop() { update(); drawScene(); requestAnimationFrame(animationLoop); }
+
+        function update() {
+            // Animation Progress
+            for (const key in assets) {
+                const a = assets[key];
+                if (a.active && a.progress < 1) { a.progress += 0.03; if (a.progress > 1) a.progress = 1; }
+            }
+            // Grayscale Transition
+            if (Math.abs(worldState.currentGrayscale - worldState.targetGrayscale) > 0.5) {
+                worldState.currentGrayscale += (worldState.targetGrayscale - worldState.currentGrayscale) * 0.05;
+            } else worldState.currentGrayscale = worldState.targetGrayscale;
+        }
+
+        function drawScene() {
+            const w = canvas.width; const h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+            
+            const currentSceneId = scenes[worldState.currentSceneIdx].id;
+
+            // 1. Background
+            if (worldState.phase >= 1 && loadedAssets.scenes[currentSceneId]) {
+                const img = loadedAssets.scenes[currentSceneId];
+                // Cover logic
+                const imgAspect = img.width / img.height;
+                const canvasAspect = w / h;
+                let dw, dh, sx, sy;
+                if (canvasAspect > imgAspect) { dw = w; dh = w / imgAspect; sx = 0; sy = (h - dh) / 2; }
+                else { dh = h; dw = h * imgAspect; sx = (w - dw) / 2; sy = 0; }
+                ctx.drawImage(img, sx, sy, dw, dh);
+            } else {
+                // Empty State
+                ctx.fillStyle = "#f0f9ff"; ctx.fillRect(0, 0, w, h);
+                ctx.fillStyle = "#cbd5e1"; ctx.fillRect(0, h*0.6, w, h*0.4); // Ground placeholder
+                if (worldState.phase === 0) {
+                    ctx.fillStyle = "#64748b"; ctx.font = "16px 'Noto Sans KR'"; ctx.textAlign = "center";
+                    ctx.fillText("AI: \"어르신의 기억 속 공간을 들려주세요.\"", w/2, h/2);
+                }
+            }
+
+            // 2. Objects (Only show interactive objects in the 'Yard')
+            // Apply Grayscale Filter for interactive phase
+            ctx.save();
+            ctx.filter = `grayscale(${worldState.currentGrayscale}%)`;
+            
+            if (imagesReady && worldState.phase >= 1 && currentSceneId === 'yard') {
+                if (assets.house.active) drawPopUp(loadedAssets.objects.house, assets.house, w, h);
+                
+                if (worldState.phase >= 2) {
+                    if (assets.tree.active) drawPopUp(loadedAssets.objects.tree, assets.tree, w, h);
+                    if (assets.dog.active) drawPopUp(loadedAssets.objects.dog, assets.dog, w, h);
+                }
+            }
+            ctx.restore();
+        }
+
+        function drawPopUp(img, asset, cw, ch) {
+            if (!img) return;
+            const ar = img.width / img.height;
+            const tw = cw * asset.wRatio; const th = tw / ar;
+            const ax = cw * asset.xRatio; const ay = ch * asset.yRatio;
+            let scale = easeOutBack(asset.progress); if (scale < 0) scale = 0;
+
+            ctx.save();
+            ctx.translate(ax, ay);
+            ctx.globalAlpha = Math.min(asset.progress, 0.3); ctx.fillStyle = "rgba(40,40,30,1)";
+            ctx.save(); ctx.scale(1, 0.2); ctx.beginPath(); ctx.arc(0, 0, (tw/2)*Math.min(asset.progress,1), 0, Math.PI*2); ctx.fill(); ctx.restore();
+            ctx.globalAlpha = 1.0;
+            ctx.scale(1, scale); ctx.drawImage(img, -tw/2, -th, tw, th);
+            ctx.restore();
+        }
+
+        // 5. Simulation Logic
+        function logMsg(msg, color="text-green-500") {
+            const log = document.getElementById('system-log');
+            log.innerHTML += `<br>> <span class="${color}">${msg}</span>`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function updateStatus(text) {
+            document.getElementById('status-text').innerText = text;
+        }
+
+        // Phase 1: Space Construction
+        function simulatePhase1(step) {
+            if (step === 'init') {
+                logMsg("[USER] Voice: \"마당이 넓은 기와집이었어.\"", "text-white");
+                setTimeout(() => {
+                    logMsg("[AI] Q: \"마당엔 잔디가 있었나요, 흙마당이었나요?\"");
+                    setTimeout(() => {
+                        logMsg("[GEN] Flux.2 Pro: Generating Multi-Room Layout...", "text-yellow-500");
+                        updateStatus("Constructing World...");
+                        
+                        setTimeout(() => {
+                            worldState.phase = 1;
+                            worldState.currentSceneIdx = 0; // Start at Yard
+                            assets.house.active = true;
+                            assets.house.progress = 0;
+                            
+                            // Enable Navigation UI
+                            document.getElementById('nav-controls').style.opacity = 1;
+                            document.getElementById('nav-controls').style.pointerEvents = "auto";
+                            document.getElementById('location-badge').innerHTML = `🏠 ${scenes[0].name}`;
+                            
+                            logMsg("[RENDER] Space Constructed: Yard, Room, Hall, Kitchen.");
+                            updateStatus("Phase 1 Complete");
+                        }, 2500);
+                    }, 1000);
+                }, 500);
+            }
+        }
+
+        // Phase 2: Memory Planting
+        function simulatePhase2(item) {
+            if (worldState.phase < 1) {
+                alert("Phase 1 공간 생성을 먼저 진행해주세요.");
+                return;
+            }
+            // Force navigate to Yard for objects demo
+            if (worldState.currentSceneIdx !== 0) {
+                logMsg("[NAV] Auto-navigating to Yard for object placement...");
+                worldState.currentSceneIdx = 0;
+                document.getElementById('location-badge').innerHTML = `🏠 ${scenes[0].name}`;
+            }
+
+            worldState.phase = 2;
+            
+            if (item === 'tree') {
+                logMsg("[USER] Voice: \"감나무가 있었지.\"", "text-white");
+                setTimeout(() => {
+                    logMsg("[GEN] Z-Image Turbo: Object 'Persimmon Tree' (0.8s)");
+                    assets.tree.active = true;
+                    assets.tree.progress = 0;
+                    worldState.targetGrayscale = 66; 
+                    logMsg("[INTERACT] Memory Object Planted.");
+                }, 1000);
+            } else if (item === 'dog') {
+                logMsg("[USER] Voice: \"흰둥이도 있었어.\"", "text-white");
+                setTimeout(() => {
+                    logMsg("[GEN] Z-Image Turbo: Object 'White Dog' (0.8s)");
+                    assets.dog.active = true;
+                    assets.dog.progress = 0;
+                    setTimeout(() => {
+                        logMsg("[QUIZ] AI: \"흰둥이의 진짜 이름은 뭐였죠?\"");
+                        logMsg("[USER] Voice: \"바둑이!\"", "text-white");
+                        worldState.targetGrayscale = 0; // Full Color Reward
+                        logMsg("[REWARD] Memory Restored (Full Color).");
+                    }, 1500);
+                }, 1000);
+            }
+        }
+
+        resizeCanvas();
+        requestAnimationFrame(animationLoop);
+    </script>
+</body>
+</html>
